@@ -1,8 +1,7 @@
-import { getProfileByUserIdAction } from "@/actions/profiles-actions";
+import { createProfileAction, getProfileByUserIdAction } from "@/actions/profiles-actions";
 import Header from "@/components/header";
 import { Toaster } from "@/components/ui/toaster";
 import { Providers } from "@/components/utilities/providers";
-import { createProfile } from "@/db/queries/profiles-queries";
 import { ClerkProvider } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import type { Metadata } from "next";
@@ -20,9 +19,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { userId } = await auth();
 
   if (userId) {
-    const res = await getProfileByUserIdAction(userId);
-    if (!res.data) {
-      await createProfile({ userId });
+    try {
+      const res = await getProfileByUserIdAction(userId);
+      if (!res.data) {
+        await createProfileAction({ 
+          userId,
+          membership: "free" 
+        });
+      }
+    } catch (error) {
+      console.error("Error in profile setup:", error);
     }
   }
 
