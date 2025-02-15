@@ -1,14 +1,10 @@
 import { config } from "dotenv";
 import { drizzle } from "drizzle-orm/postgres-js";
+import { pgTable } from "drizzle-orm/pg-core";
 import postgres from "postgres";
-import { profilesTable, foldersTable } from "./schema";
+import * as schema from "./schema";
 
 config({ path: ".env.local" });
-
-const schema = {
-  profiles: profilesTable,
-  folders: foldersTable
-};
 
 const client = postgres(process.env.DATABASE_URL!);
 
