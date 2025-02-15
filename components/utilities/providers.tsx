@@ -6,7 +6,7 @@ import { ThemeProviderProps } from "next-themes/dist/types";
 
 export const Providers = ({ children, ...props }: ThemeProviderProps) => {
   return (
-    <NextThemesProvider {...props}>
+    <NextThemesProvider enableSystem={true} {...props}>
       <TooltipProvider>{children}</TooltipProvider>
     </NextThemesProvider>
   );

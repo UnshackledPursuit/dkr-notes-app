@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (userId) {
     const res = await getProfileByUserIdAction(userId);
@@ -28,7 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
           <Providers
             attribute="class"
