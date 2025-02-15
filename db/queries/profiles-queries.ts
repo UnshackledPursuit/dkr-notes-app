@@ -16,7 +16,7 @@ export const createProfile = async (data: InsertProfile) => {
 
 export const getProfileByUserId = async (userId: string) => {
   try {
-    const profile = await db.query.profiles.findFirst({
+    const profile = await db.query.profilesTable.findFirst({
       where: eq(profilesTable.userId, userId)
     });
 
@@ -28,7 +28,7 @@ export const getProfileByUserId = async (userId: string) => {
 };
 
 export const getAllProfiles = async (): Promise<SelectProfile[]> => {
-  return db.query.profiles.findMany();
+  return db.query.profilesTable.findMany();
 };
 
 export const updateProfile = async (userId: string, data: Partial<InsertProfile>) => {
